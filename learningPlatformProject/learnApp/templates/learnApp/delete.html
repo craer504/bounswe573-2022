@@ -1,0 +1,17 @@
+{% extends 'learnapp_main.html' %}
+
+{% block content %}
+
+<form method="POST" action="">
+
+    {% csrf_token %}
+    
+    <p> Would you like to delete "{{obj}}"? </p>
+    
+    <a href="{{request.META.HTTP_REFERER}}"> Go back </a>
+    
+    <input type="submit" value="Confirm" />
+
+</form>
+
+{% endblock content %}

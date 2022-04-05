@@ -1,0 +1,13 @@
+<h3>Most recent updates:</h3>
+<hr>
+{% for message in workspace_messages%}
+<div>
+    <small><a href="{% url 'user_profile' message.user.id %}">@{{message.user}}</a> {{message.message_created|timesince}}</small>
+    <small>In "{{message.message_workspace}}"</small>
+    <p>{{message}}</p>
+    {% if request.user == message.user%}
+    <a href="{% url 'delete_message' message.id %}">Delete</a>
+    {% endif %}
+    <hr>
+</div>
+{% endfor %}

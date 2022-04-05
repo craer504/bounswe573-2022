@@ -1,0 +1,33 @@
+{% extends 'learnapp_main.html' %}
+
+{% block content %}
+
+<style>
+    .home-container {
+        display: grid;
+        grid-template-columns: 1fr 3fr 1fr;
+    }
+</style>
+
+<h1>My Home Template</h1>
+
+<div class="home-container">
+
+    <div>
+        {% include 'learnApp/subjects_component.html' %}
+    </div>
+
+    <div>
+        <h5>{{workspace_count}} workspaces.</h5>
+        <a href="{% url 'create_workspace' %}">Create a Workspace</a>
+
+        {% include 'learnApp/feed_component.html' %}
+
+    </div>
+
+    <div>
+        {% include 'learnApp/activity_component.html' %}
+    </div>
+
+</div>
+{% endblock %}
