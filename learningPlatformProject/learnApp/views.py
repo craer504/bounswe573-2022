@@ -82,7 +82,7 @@ def learnapp_home(request):
 def learnapp_workspace(request, pk):
     workspace = Workspace.objects.get(id=pk)
     workspace_messages = workspace.message_set.all().order_by('-message_created')
-    lecturers = workspace.workspace_lecturers.all()
+    lecturers = workspace.workspace_lecturers.all() 
     if request.method == 'POST':
         message = Message.objects.create(
             user=request.user,
