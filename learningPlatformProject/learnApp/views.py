@@ -111,17 +111,17 @@ def userProfile(request, pk):
 @login_required(login_url='login')
 def createWorkspace(request):
     form = WorkspaceForm()
-
+    subjects = Subject.objects.all()
     if request.method == 'POST':
-        form = WorkspaceForm(request.POST)
-        if form.is_valid():
-            workspace = form.save(commit=False)
-            workspace.workspace_host = request.user
-            workspace.save()
-            return redirect('home_url')
-
-    context = {'form': form}
-
+        subject, created = Subject.objects.get_or_create(subject_name = request.POST.get('subject'))
+        Workspace.objects.create(
+            workspace_host = request.user,
+            workspace_subject = subject,
+            workspace_name = request.POST.get('workspace_name'),
+            workspace_description = request.POST.get('workspace_description'),
+        )
+        return redirect('home_url')
+    context = {'form': form, 'subjects':subjects}
     return render(request, 'learnApp/workspace_form.html', context)
 
 
@@ -129,7 +129,7 @@ def createWorkspace(request):
 def updateWorkspace(request, pk):
     workspace = Workspace.objects.get(id=pk)
     form = WorkspaceForm(instance=workspace)
-
+    subjects = Subject.objects.all()
     if request.user != workspace.workspace_host:
         return HttpResponse('Access restricted')
 
@@ -140,7 +140,7 @@ def updateWorkspace(request, pk):
             form.save()
             return redirect('home_url')
 
-    context = {'form': form}
+    context = {'form': form,'subjects':subjects}
 
     return render(request, 'learnApp/workspace_form.html', context)
 

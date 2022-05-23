@@ -12,7 +12,6 @@
     {% if request.resolver_match.view_name == 'user_profile' %}
 
         {% if request.user == workspace.workspace_host %}
-
         
         <a href="{% url 'update_workspace' workspace.id %}"> Edit this workspace </a>
         <a href="{% url 'delete_workspace' workspace.id %}"> Delete this workspace </a>

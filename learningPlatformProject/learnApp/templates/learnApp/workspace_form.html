@@ -7,7 +7,41 @@
 
         {% csrf_token %}
 
+        <!--
         {{form.as_p}}
+        -->
+
+        <div>
+            
+            <label for="workspace_subject"> Workspace Subject </label>
+
+            <input type="text" name="subject" list="subject_list">
+            
+            <datalist id="subject_list">
+
+                <select id="workspace_subject">
+                    
+                    {% for subject in subjects %}
+
+                    <option value="{{subject.subject_name}}">{{subject.subject_name}}</option>
+
+                    {% endfor %}
+                    
+                </select>
+            
+            </datalist>
+
+        </div>
+
+        <div>
+            <label for="workspace_name"> Workspace Name </label>
+            {{form.workspace_name}}
+        </div>
+
+        <div>
+            <label for="workspace_description"> Workspace Description </label>
+            {{form.workspace_description}}
+        </div>
 
         <input type="Submit" value="Submit" />
 
