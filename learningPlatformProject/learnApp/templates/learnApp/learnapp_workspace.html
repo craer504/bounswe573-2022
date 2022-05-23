@@ -21,39 +21,53 @@
             <hr>
 
             {% for message in workspace_messages %}
+
             <div>
                 {% if request.user == message.user%}
+
                 <a href="{% url 'delete_message' message.id %}">Delete</a>
+                
                 {% endif %}
+
                 <small>
                     @{{message.user}} {{message.message_created|timesince}} old.
                 </small>
+
                 <p>{{message.message_body}}</p>
                 <hr>
             </div>
+
             {% endfor %}
+
         </div>
 
         {% if request.user.is_authenticated %}
+
         <div class="message-form">
+
             <form method="POST" action="">
                 {% csrf_token %}
                 <input type="text" name="body" placeholder="Add knowledge..." />
             </form>
+            
         </div>
+
         {% endif %}
 
     </div>
 
     <div>
-        <h3>Participants</h3>
+        <h3>Learnee's:</h3>
         <hr>
 
         {% for lecturer in lecturers%}
+        
             <div>
-                <p>@{{lecturer.username}}</p>
+                <p> <a href="{% url 'user_profile' lecturer.id %}"> @{{lecturer.username}} </a> </p>
             </div>
+
         {% endfor %}
+    
     </div>
 
 </div>
