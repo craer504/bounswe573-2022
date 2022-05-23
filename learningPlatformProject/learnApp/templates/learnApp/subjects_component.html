@@ -3,6 +3,7 @@
 <div>
     <a href="{% url 'home_url' %}"> All Subjects </a>
 </div>
+
 {% for subject in subjects %}
 <div>
     <a href="{% url 'home_url' %}?q={{subject.subject_name}}">{{subject.subject_name}}</a>
