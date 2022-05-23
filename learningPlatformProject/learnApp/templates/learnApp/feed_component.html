@@ -22,9 +22,11 @@
 
         <!-- {{workspace.id}} -->
 
-        <h4> <a href="{% url 'workspace_url' workspace.id %}"> {{workspace.workspace_name}} </a> </h4>
-        <h6> {{workspace.workspace_lecturers.all.count}} learnee's. </h6>
-        <small>{{workspace.workspace_subject.subject_name}}</small>
+        <a href="{% url 'workspace_url' workspace.id %}"> {{workspace.workspace_name}} </a>
+        <br>
+        {{workspace.workspace_lecturers.all.count}} learnee's.
+        <br>
+        Tag: {{workspace.workspace_subject.subject_name}}
         <hr>
     </div>
     {% endfor %}
