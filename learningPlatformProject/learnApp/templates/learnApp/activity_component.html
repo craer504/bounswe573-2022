@@ -6,7 +6,7 @@
 
 <div>
 
-    <small><a href="{% url 'user_profile' message.user.id %}"> @{{message.user}} </a> {{message.message_created|timesince}} ago, </small>
+    <small> <a href="{% url 'user_profile' message.user.id %}"> @{{message.user}} </a> {{message.message_created|timesince}} ago, </small>
     
     <small> in <a href="{% url 'workspace_url' message.message_workspace.id %}"> "{{message.message_workspace}}" </a> </small>
     

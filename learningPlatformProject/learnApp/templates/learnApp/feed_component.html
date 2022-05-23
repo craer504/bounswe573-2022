@@ -8,12 +8,22 @@
     </div>
 
     <div>
+
+    {% if request.resolver_match.view_name == 'user_profile' %}
+
         {% if request.user == workspace.workspace_host %}
+
+        
         <a href="{% url 'update_workspace' workspace.id %}"> Edit this workspace </a>
         <a href="{% url 'delete_workspace' workspace.id %}"> Delete this workspace </a>
+        
         {% endif %}
+    
+    {% endif %}
 
-        <h5> {{workspace.id}} - <a href="{% url 'workspace_url' workspace.id %}"> {{workspace.workspace_name}} </a> </h5>
+        <!-- {{workspace.id}} -->
+
+        <h4> <a href="{% url 'workspace_url' workspace.id %}"> {{workspace.workspace_name}} </a> </h4>
         <h6> {{workspace.workspace_lecturers.all.count}} learnee's. </h6>
         <small>{{workspace.workspace_subject.subject_name}}</small>
         <hr>
