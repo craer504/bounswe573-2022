@@ -1,4 +1,3 @@
-from email import message
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.http import HttpResponse
@@ -9,6 +8,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Message, Workspace, Subject
 from .forms import WorkspaceForm
+
 
 def loginPage(request):
     page = 'login'
@@ -30,9 +30,11 @@ def loginPage(request):
     context = {'page': page}
     return render(request, 'learnApp/register_login.html', context)
 
+
 def logoutUser(request):
     logout(request)
     return redirect('home_url')
+
 
 def registerPage(request):
     form = UserCreationForm()
@@ -49,9 +51,9 @@ def registerPage(request):
                 request, 'An error occured during the registration process.')
     return render(request, 'learnApp/register_login.html', {'form': form})
 
+
 def learnapp_home(request):
     q = request.GET.get('q') if request.GET.get('q') != None else ''
-
     workspaces = Workspace.objects.filter(
         Q(workspace_subject__subject_name__icontains=q) |
         Q(workspace_name__icontains=q) |
@@ -65,6 +67,7 @@ def learnapp_home(request):
                'workspace_count': workspace_count, 'workspace_messages': workspace_messages}
     return render(request, 'learnApp/learnapp_home.html', context)
 
+
 def learnapp_workspace(request, pk):
     workspace = Workspace.objects.get(id=pk)
     workspace_messages = workspace.message_set.all().order_by('-message_created')
@@ -77,9 +80,9 @@ def learnapp_workspace(request, pk):
         )
         workspace.workspace_lecturers.add(request.user)
         return redirect('workspace_url', pk=workspace.id)
-    context = {'workspace': workspace,
-               'workspace_messages': workspace_messages, 'lecturers': lecturers}
+    context = {'workspace': workspace, 'workspace_messages': workspace_messages, 'lecturers': lecturers}
     return render(request, 'learnApp/learnapp_workspace.html', context)
+
 
 def userProfile(request, pk):
     user = User.objects.get(id=pk)
@@ -89,6 +92,7 @@ def userProfile(request, pk):
     context = {'user': user, 'workspaces': workspaces,
                'workspace_messages': workspace_messages, 'subjects': subjects}
     return render(request, 'learnApp/profile.html', context)
+
 
 @login_required(login_url='login')
 def createWorkspace(request):
@@ -106,6 +110,7 @@ def createWorkspace(request):
     context = {'form': form, 'subjects':subjects}
     return render(request, 'learnApp/workspace_form.html', context)
 
+
 @login_required(login_url='login')
 def updateWorkspace(request, pk):
     workspace = Workspace.objects.get(id=pk)
@@ -114,12 +119,15 @@ def updateWorkspace(request, pk):
     if request.user != workspace.workspace_host:
         return HttpResponse('Access restricted')
     if request.method == 'POST':
-        form = WorkspaceForm(request.POST, instance=workspace)
-        if form.is_valid():
-            form.save()
-            return redirect('home_url')
+        subject, created = Subject.objects.get_or_create(subject_name = request.POST.get('subject'))
+        workspace.workspace_name = request.POST.get('workspace_name')
+        workspace.workspace_subject = subject
+        workspace.workspace_description = request.POST.get('workspace_description')
+        workspace.save()
+        return redirect('home_url')
     context = {'form': form,'subjects':subjects,'workspace':workspace}
     return render(request, 'learnApp/workspace_form.html', context)
+
 
 @login_required(login_url='login')
 def deleteWorkspace(request, pk):
@@ -130,6 +138,7 @@ def deleteWorkspace(request, pk):
         workspace.delete()
         return redirect('home_url')
     return render(request, 'learnApp/delete.html', {'obj': workspace})
+
 
 @login_required(login_url='login')
 def deleteMessage(request, pk):

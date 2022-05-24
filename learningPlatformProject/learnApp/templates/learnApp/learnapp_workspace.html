@@ -3,13 +3,16 @@
 {% block content %}
 
 <style>
+    
     .workspace-container {
         display: grid;
         grid-template-columns: 3fr 1fr;
     }
+
 </style>
 
 <div class="workspace-container">
+
     <div>
 
         <h1> {{ workspace.workspace_name}} </h1>
@@ -17,24 +20,31 @@
         <p>{{workspace.workspace_description}}</p>
 
         <div class="message-wrapper">
+
             <h3>Subject discussion:</h3>
+            
             <hr>
 
             {% for message in workspace_messages %}
 
             <div>
+
                 {% if request.user == message.user%}
 
-                <a href="{% url 'delete_message' message.id %}">Delete</a>
+                    <a href="{% url 'delete_message' message.id %}">Delete</a>
                 
                 {% endif %}
 
                 <small>
+
                     @{{message.user}} {{message.message_created|timesince}} old.
+                
                 </small>
 
-                <p>{{message.message_body}}</p>
+                <p>{{message.message_body|safe}}</p>
+
                 <hr>
+            
             </div>
 
             {% endfor %}
@@ -44,12 +54,15 @@
         {% if request.user.is_authenticated %}
 
         <div class="message-form">
-
-            <form method="POST" action="">
-                {% csrf_token %}
-                <input type="text" name="body" placeholder="Add knowledge..." />
-            </form>
             
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <input type="text" name="body" placeholder="Add knowledge..." />
+        
+            </form>
+        
         </div>
 
         {% endif %}
@@ -57,7 +70,9 @@
     </div>
 
     <div>
+        
         <h3> {{lecturers.count}} learnee's here.</h3>
+
         <hr>
 
         {% for lecturer in lecturers%}

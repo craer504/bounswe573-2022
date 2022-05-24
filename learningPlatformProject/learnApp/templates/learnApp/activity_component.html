@@ -10,7 +10,7 @@
     
     <small> in <a href="{% url 'workspace_url' message.message_workspace.id %}"> "{{message.message_workspace}}" </a> </small>
     
-    <p>{{message}}</p>
+    <p>{{message|safe}}</p>
     
     {% if request.user == message.user%}
 

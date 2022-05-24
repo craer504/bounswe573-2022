@@ -1,6 +1,7 @@
 <div>
 
     {% for workspace in workspaces %}
+
     <div>
 
         <a href="{% url 'user_profile' workspace.workspace_host.id %}"> @{{workspace.workspace_host.username}} </a>
@@ -8,27 +9,35 @@
     </div>
 
     <div>
-
-    {% if request.resolver_match.view_name == 'user_profile' %}
-
-        {% if request.user == workspace.workspace_host %}
-        
-        <a href="{% url 'update_workspace' workspace.id %}"> Edit this workspace </a>
-        <a href="{% url 'delete_workspace' workspace.id %}"> Delete this workspace </a>
-        
-        {% endif %}
     
-    {% endif %}
-
-        <!-- {{workspace.id}} -->
-
         <a href="{% url 'workspace_url' workspace.id %}"> {{workspace.workspace_name}} </a>
+
+        {% if request.resolver_match.view_name == 'user_profile' %}
+              
+            {% if request.user == workspace.workspace_host %}
+            
+            <br>
+
+            <a href="{% url 'update_workspace' workspace.id %}"> Edit this workspace </a>
+            &nbsp
+            <a href="{% url 'delete_workspace' workspace.id %}"> Delete this workspace </a>
+
+            {% endif %}
+            
+        {% endif %}
+        
         <br>
+
         {{workspace.workspace_lecturers.all.count}} learnee's.
+   
         <br>
+   
         Tag: {{workspace.workspace_subject.subject_name}}
+   
         <hr>
+   
     </div>
+
     {% endfor %}
 
 </div>

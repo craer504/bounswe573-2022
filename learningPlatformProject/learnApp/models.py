@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Workspace(models.Model):
     workspace_host = models.ForeignKey(
         User, on_delete=models.CASCADE, null=True)
