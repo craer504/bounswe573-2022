@@ -1,1 +1,1 @@
-web: gunicorn learningPlatformProject.learningPlatform.wsgi
+web: gunicorn --chdir ./learningPlatform wsgi
