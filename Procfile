@@ -1,1 +1,1 @@
-web: gunicorn learningPlatform.wsgi.application
+web: gunicorn wsgi.py
