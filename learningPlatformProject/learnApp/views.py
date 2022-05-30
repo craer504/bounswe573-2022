@@ -93,11 +93,6 @@ def userProfile(request, pk):
                'workspace_messages': workspace_messages, 'subjects': subjects}
     return render(request, 'learnApp/profile.html', context)
 
-@login_required(login_url='login')
-def updateUser(request):
-    return render(request, 'learnApp/update_user.html')
-
-
 
 @login_required(login_url='login')
 def createWorkspace(request):
