@@ -60,6 +60,8 @@
                 {% csrf_token %}
 
                 <input type="text" name="body" placeholder="Add knowledge..." />
+                &nbsp
+                <a href="{% url 'view_quizzes' %}"> View quizzes </a>
         
             </form>
         

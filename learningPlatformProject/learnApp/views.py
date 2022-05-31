@@ -149,3 +149,7 @@ def deleteMessage(request, pk):
         message.delete()
         return redirect('home_url')
     return render(request, 'learnApp/delete.html', {'obj': message})
+
+    
+def viewQuizzes(request):
+    return render(request, 'learnApp/view_quizzes.html')

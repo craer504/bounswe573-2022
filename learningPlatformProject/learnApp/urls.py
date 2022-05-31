@@ -13,4 +13,5 @@ urlpatterns = [
     path('delete_workspace/<str:pk>/',views.deleteWorkspace, name="delete_workspace"),
     path('delete_message/<str:pk>/', views.deleteMessage, name="delete_message"),
     path('profile/<str:pk>/', views.userProfile, name="user_profile"),
+    path('view_quizzes/', views.viewQuizzes, name="view_quizzes"),
 ]
